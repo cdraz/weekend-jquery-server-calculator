@@ -1,15 +1,15 @@
 TO DO
-[ ] Initial setup
-    [ ] HTML
-    [ ] CSS
-    [ ] client.js
-    [ ] server.js
-    [ ] jQuery.js
-    [ ] Npm init --yes, install Express, body-parser, .gitignore
-[ ] HTML Mockup
+[X] Initial setup
+    [X] HTML
+    [X] CSS
+    [X] client.js
+    [X] server.js
+    [X] jQuery.js
+    [X] Npm init --yes, install Express, body-parser, .gitignore
+[X] HTML Mockup
 [ ] Server.js setup
-    [ ] POST /calculator endpoint
-    [ ] GET /calculator endpoint
+    [X] POST /calculator endpoint
+    [X] GET /calculator endpoint
     [ ] Math calculation
 [ ] Client.js setup
     [ ] jQuery event handlers

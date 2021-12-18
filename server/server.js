@@ -12,10 +12,24 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Declare global answer variable
 
+let answer = {};
 
+// GET /calculator endpoint
+app.get('/calculator', (req, res) => {
+    console.log('in GET /calculator');
+    res.send(answer);
+});
 
-
+// POST /calculator endpoint
+app.post('/calculator', (req, res) => {
+    console.log('in POST /calculator', req.body);
+    
+    
+    // Send status 201 when complete
+    res.sendStatus(201);
+});
 
 
 
