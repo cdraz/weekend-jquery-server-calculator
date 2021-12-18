@@ -20,7 +20,7 @@ function onCalculate(event) {
     // Check to see if operator is selected
     if (!calculation.operator) {
         console.log('no operator selected');
-        alert('Please select and operator before calculating.');
+        alert('Please select an operator before calculating.');
         return;
     }
 
@@ -35,12 +35,24 @@ function onCalculate(event) {
     calculation.num1 = $('#num1').val();
     calculation.num2 = $('#num2').val();
     console.log('input numbers', calculation.num1, calculation.num2);
+
+    // Send calculation to server
+    $.ajax({
+        method: 'POST',
+        url: '/calculator',
+        data: calculation
+    })
+        .then( res => {
+            console.log('POST response', res );
+        });
+
     
     // Empty input fields
     $('#num1').val('');
     $('#num2').val('');
+    $('#operators').children().removeClass('selectedOperator');
 
-    
+
 
 }
 

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 // Declare global answer variable
 
-let calculation = {};
+let calculation;
 
 // GET /calculator endpoint
 app.get('/calculator', (req, res) => {
@@ -25,13 +25,35 @@ app.get('/calculator', (req, res) => {
 // POST /calculator endpoint
 app.post('/calculator', (req, res) => {
     console.log('in POST /calculator', req.body);
-    
+
+    // Set calculation to received data
+    calculation = req.body;
+
+    // Call calculateAnswer function
+    calculateAnswer(calculation);
 
     // Send status 201 when complete
     res.sendStatus(201);
 });
 
 
+
+// Declare calculateAnswer
+function calculateAnswer(object) {
+    // Determine operator
+    if (object.operator === '+') {
+        calculation.answer = object.num1 + object.num2;
+    }
+    if (object.operator === '-') {
+        calculation.answer = object.num1 - object.num2;
+    }
+    if (object.operator === '*') {
+        calculation.answer = object.num1 * object.num2;
+    }
+    if (object.operator === '/') {
+        calculation.answer = object.num1 / object.num2;
+    }
+} // end calculateAnswer
 
 
 // Listen on port 5000
