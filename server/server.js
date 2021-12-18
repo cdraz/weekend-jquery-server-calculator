@@ -14,19 +14,19 @@ app.use(bodyParser.json());
 
 // Declare global answer variable
 
-let answer = {};
+let calculation = {};
 
 // GET /calculator endpoint
 app.get('/calculator', (req, res) => {
     console.log('in GET /calculator');
-    res.send(answer);
+    res.send(calculation);
 });
 
 // POST /calculator endpoint
 app.post('/calculator', (req, res) => {
     console.log('in POST /calculator', req.body);
     
-    
+
     // Send status 201 when complete
     res.sendStatus(201);
 });
