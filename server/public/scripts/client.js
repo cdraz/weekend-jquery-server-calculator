@@ -8,6 +8,10 @@ function onReady() {
     $(document).on('submit', '#calculator', onCalculate );
         // onOperator
     $(document).on('click', '.operator', onOperator );
+        // onClear
+    $(document).on('click', '#clear', clearCalculator );
+
+    refresh();
 }
 
 // Declare global object to store numbers and operator
@@ -44,17 +48,16 @@ function onCalculate(event) {
     })
         .then( res => {
             console.log('POST response', res );
-        });
-
-    
-    // Empty input fields
-    $('#num1').val('');
-    $('#num2').val('');
-    $('#operators').children().removeClass('selectedOperator');
+        })
 
 
+    // Refresh DOM
+    refresh();
 
-}
+    // Reset calculator
+    clearCalculator();
+
+} // end onCalculate
 
 // Declare onOperator function
 function onOperator(event) {
@@ -67,4 +70,65 @@ function onOperator(event) {
     // Set operator property for calculation object
     calculation.operator = $(this).val();
     console.log(calculation);
-}
+
+} // end onOperator
+
+// Declare clearCalculator function
+function clearCalculator() {
+    // Input reset, operator visual reset
+    $('#num1').val('');
+    $('#num2').val('');
+    $('#operators').children().removeClass('selectedOperator');
+
+    // Reset calculation
+    calculation = {};
+
+} // end clearCalculator
+
+// Declare refresh function
+function refresh() {
+
+    // Get solution from server
+        $.ajax({
+            method: 'GET',
+            url: '/calculator'
+        })
+            .then( res => {
+                console.log('AJAX request complete', res );
+                renderAnswer(res);
+            })
+    // Get history from server
+        $.ajax({
+            method: 'GET',
+            url: '/history'
+        })
+            .then( res => {
+                console.log('AJAX request complete', res);
+                renderHistory(res);
+            })
+
+} // end refresh
+
+// Declare renderHistory function
+function renderHistory(object) {
+
+    // Clear previous histry
+    $('#history').empty();
+
+    // Show history on DOM
+    for (let pastCalc of object) {
+    $('#history').append(`
+        <li>
+            ${pastCalc.num1} ${pastCalc.operator} ${pastCalc.num2} = ${pastCalc.answer}
+        </li>
+    `);
+    }
+
+} // end renderHistory
+
+// Declare renderAnswer
+function renderAnswer(object) {
+    // Show solution to current calculation on DOM
+    $('#answer').html(object.answer);
+
+}// end renderAnswer

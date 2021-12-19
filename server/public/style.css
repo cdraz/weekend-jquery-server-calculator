@@ -15,3 +15,15 @@ button {
     background-color: white;
     color: orange;
 }
+
+#answer {
+    color: white;
+}
+
+#history {
+    color: white;
+}
+
+#calculator {
+    display: flex;
+}

@@ -15,10 +15,11 @@ app.use(bodyParser.json());
 // Declare global answer variable
 
 let calculation;
+let history = [];
 
 // GET /calculator endpoint
 app.get('/calculator', (req, res) => {
-    console.log('in GET /calculator');
+    console.log('in GET /calculator, sending', calculation);
     res.send(calculation);
 });
 
@@ -27,7 +28,11 @@ app.post('/calculator', (req, res) => {
     console.log('in POST /calculator', req.body);
 
     // Set calculation to received data
-    calculation = req.body;
+    calculation = {
+        num1: Number(req.body.num1),
+        num2: Number(req.body.num2),
+        operator: req.body.operator
+    }
 
     // Call calculateAnswer function
     calculateAnswer(calculation);
@@ -36,11 +41,17 @@ app.post('/calculator', (req, res) => {
     res.sendStatus(201);
 });
 
+// GET /history endpoint
+app.get('/history', (req, res) => {
+    console.log('in GET /history, sending', history);
+    res.send(history);
+});
 
+// No POST /history endpoint needed -- client cannot modify history
 
 // Declare calculateAnswer
 function calculateAnswer(object) {
-    // Determine operator
+    // Determine operator and calculate answer
     if (object.operator === '+') {
         calculation.answer = object.num1 + object.num2;
     }
@@ -53,6 +64,9 @@ function calculateAnswer(object) {
     if (object.operator === '/') {
         calculation.answer = object.num1 / object.num2;
     }
+    // Push calculation object to calculation history array
+    history.push(calculation);
+
 } // end calculateAnswer
 
 
